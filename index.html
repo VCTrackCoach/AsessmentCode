@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thesis Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4EDDF;
+    --paper: #FAF6ED;
+    --ink: #2A1F15;
+    --muted: #6B5A47;
+    --border: #D6C9B0;
+    --border-soft: #E8DDC7;
+    --accent: #7A2E2E;
+    --accent-ink: #FAF6ED;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif; }
+  body {
+    min-height: 100vh;
+    background-image: radial-gradient(circle at 1px 1px, rgba(42, 31, 21, 0.04) 1px, transparent 0);
+    background-size: 12px 12px;
+  }
+  .display { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
+  .italic { font-style: italic; }
+  .accent { color: var(--accent); }
+  .muted { color: var(--muted); }
+
+  header {
+    padding: 32px 24px 16px;
+  }
+  header .inner, main .inner, footer .inner {
+    max-width: 1152px;
+    margin: 0 auto;
+  }
+  header .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .linkbtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+    font-family: inherit;
+  }
+  .linkbtn:hover { color: var(--accent); }
+
+  main { padding: 0 24px 80px; }
+  @media (min-width: 768px) { header { padding: 40px 48px 16px; } main { padding: 0 48px 80px; } footer { padding: 24px 48px; } }
+
+  h1.title {
+    font-size: clamp(44px, 8vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+  .subtitle {
+    margin-top: 12px;
+    font-size: clamp(15px, 1.5vw, 18px);
+    color: var(--muted);
+    max-width: 560px;
+  }
+  .title-block { margin-bottom: 40px; padding-top: 16px; }
+
+  .grid { display: grid; gap: 32px; }
+  @media (min-width: 768px) {
+    .grid-5 { grid-template-columns: 3fr 2fr; }
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 24px;
+  }
+  @media (min-width: 768px) { .card { padding: 32px; } }
+  .card.accent-card { border: 2px solid var(--accent); }
+  .card.thin { padding: 20px; }
+  .card.sticky { position: sticky; top: 24px; }
+
+  label.field {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  label.field .hint {
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  textarea, input[type="text"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+    font-size: 16px;
+    font-family: 'Geist', sans-serif;
+    color: var(--ink);
+    resize: none;
+    transition: border-color 0.2s;
+  }
+  textarea:focus, input:focus { outline: none; border-bottom-color: var(--accent); }
+
+  button.primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    padding: 12px 28px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  button.primary:hover:not(:disabled) { opacity: 0.9; }
+  button.primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 8px 20px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--ink);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  button.secondary:hover { border-color: var(--accent); color: var(--accent); }
+  button.small-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    padding: 8px 20px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+  }
+  button.small-primary:hover:not(:disabled) { opacity: 0.9; }
+  button.small-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .err { margin-top: 12px; color: #8B1A1A; font-size: 14px; }
+
+  /* Intro build list */
+  .build-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 0; }
+  .build-list li { display: flex; gap: 12px; font-size: 14px; }
+  .build-list .num { font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); width: 20px; flex-shrink: 0; }
+  .build-list .label { font-weight: 500; display: block; }
+  .build-list .desc { color: var(--muted); }
+
+  .card h3.section-heading {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+  .pull-quote {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Progress */
+  .progress { margin-bottom: 32px; }
+  .progress-row { display: flex; align-items: center; gap: 8px; }
+  @media (min-width: 768px) { .progress-row { gap: 16px; } }
+  .progress-item { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
+  .progress-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-family: 'Fraunces', serif;
+    transition: all 0.3s;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+  }
+  .progress-dot.done {
+    background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+  }
+  .progress-dot.active {
+    border: 2px solid var(--accent); background: var(--paper); color: var(--accent);
+  }
+  .progress-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: none; }
+  .progress-label.active { color: var(--accent); font-weight: 500; }
+  @media (min-width: 640px) { .progress-label { display: block; } }
+  .progress-line { flex: 1; height: 1px; background: var(--border); }
+  .progress-line.done { background: var(--accent); }
+
+  /* Conversation area */
+  .stage-heading { margin-bottom: 16px; }
+  .stage-heading .tag { margin-bottom: 4px; display: block; }
+  .stage-heading h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .stage-heading .desc { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+  .msg-card { min-height: 160px; margin-bottom: 20px; }
+  .msg-affirm {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .msg-question { font-size: 16px; line-height: 1.6; }
+  @media (min-width: 768px) { .msg-question { font-size: 18px; } }
+  .msg-hint {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .msg-hint .tag { color: var(--accent); display: block; margin-bottom: 8px; }
+  .msg-hint p { font-size: 14px; line-height: 1.6; font-style: italic; font-family: 'Fraunces', serif; }
+  .thinking { font-style: italic; font-family: 'Fraunces', serif; color: var(--muted); }
+
+  .input-card textarea { border-bottom: none; font-size: 16px; }
+  .input-card .actions {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-soft);
+  }
+
+  /* Sidebar */
+  .sidebar-title {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  .comp-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .comp-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 4px; display: block;
+  }
+  .comp-value {
+    font-family: 'Fraunces', serif; font-size: 16px; line-height: 1.35;
+  }
+  .comp-value.empty { font-style: italic; color: var(--muted); }
+
+  /* Assemble / Final */
+  .center-load { text-align: center; padding: 80px 0; }
+  .center-load .lead { font-family: 'Fraunces', serif; font-style: italic; font-size: 24px; color: var(--muted); margin-bottom: 12px; }
+  .center-load .sub { font-size: 14px; color: var(--muted); }
+
+  .final-heading .tag { color: var(--accent); margin-bottom: 8px; display: block; }
+  .final-heading h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  .option-btn {
+    width: 100%; text-align: left;
+    background: var(--paper); border: 2px solid var(--border);
+    padding: 16px; cursor: pointer; transition: border-color 0.2s;
+    font-family: inherit; color: var(--ink);
+    display: flex; gap: 12px;
+  }
+  .option-btn:hover { border-color: var(--accent); }
+  .option-btn.selected { border-color: var(--accent); }
+  .option-btn .idx { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: var(--muted); }
+  .option-btn p { font-family: 'Fraunces', serif; font-size: 16px; line-height: 1.6; flex: 1; }
+
+  .options-section { margin-bottom: 24px; }
+  .options-section > .tag { margin-bottom: 12px; display: block; }
+  .options-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .final-thesis-card .tag { color: var(--accent); margin-bottom: 12px; display: block; }
+  .final-thesis-card textarea {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    border-bottom: none;
+    min-height: 100px;
+  }
+  @media (min-width: 768px) { .final-thesis-card textarea { font-size: 24px; } }
+  .final-thesis-card .actions {
+    display: flex; gap: 12px;
+    margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-soft);
+  }
+
+  .revise-item {
+    width: 100%; text-align: left;
+    padding: 12px; border: 1px solid var(--border);
+    background: transparent; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    font-family: inherit; color: var(--ink);
+  }
+  .revise-item:hover { border-color: var(--accent); }
+  .revise-item:hover .comp-label { color: var(--accent); }
+  .revise-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .revise-intro { font-size: 12px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+
+  footer {
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+  footer .inner { display: flex; align-items: center; justify-content: space-between; }
+  footer .brand { font-family: 'Geist', sans-serif; font-style: normal; letter-spacing: 0.2em; text-transform: uppercase; font-size: 11px; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes inkBloom {
+    from { opacity: 0; letter-spacing: 0.05em; }
+    to { opacity: 1; letter-spacing: 0; }
+  }
+  .fade-up { animation: fadeUp 0.5s ease-out both; }
+  .ink-bloom { animation: inkBloom 0.8s ease-out both; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <span class="tag">Vancouver College</span>
+    <button id="resetBtn" class="linkbtn hidden">Start Over</button>
+  </div>
+</header>
+
+<main>
+  <div class="inner">
+
+    <div class="title-block">
+      <h1 class="title display">Thesis <span class="italic accent">Workshop</span></h1>
+      <p class="subtitle">Build a strong thesis one piece at a time — topic, claim, and three reasons that hold it up.</p>
+    </div>
+
+    <!-- WELCOME -->
+    <section id="welcome" class="fade-up grid grid-5">
+      <div class="card">
+        <div style="margin-bottom: 20px;">
+          <label class="field" for="essayContext">Essay prompt or assignment <span class="hint">(optional)</span></label>
+          <textarea id="essayContext" rows="3" placeholder="Paste your teacher's essay prompt, or describe what the essay is about…"></textarea>
+        </div>
+        <div style="margin-bottom: 24px;">
+          <label class="field" for="initialInput">What are you thinking so far?</label>
+          <textarea id="initialInput" rows="5" placeholder="Type a topic, a rough idea, or a full draft thesis. Even one sentence is fine — the workshop meets you wherever you are."></textarea>
+        </div>
+        <button id="startBtn" class="primary" disabled>Begin the workshop</button>
+        <p id="welcomeErr" class="err hidden"></p>
+      </div>
+      <aside>
+        <div class="card">
+          <h3 class="section-heading display">What you'll build</h3>
+          <ol class="build-list">
+            <li><span class="num">1.</span><div><span class="label">The Topic</span><span class="desc">A specific, focused subject — narrow enough to argue about.</span></div></li>
+            <li><span class="num">2.</span><div><span class="label">The Claim</span><span class="desc">Your position on the topic. Something a reasonable person could disagree with.</span></div></li>
+            <li><span class="num">3.</span><div><span class="label">First Supporting Point</span><span class="desc">A distinct reason, example, or angle that proves your claim.</span></div></li>
+            <li><span class="num">4.</span><div><span class="label">Second Supporting Point</span><span class="desc">A different angle — clearly distinct from Reason 1.</span></div></li>
+            <li><span class="num">5.</span><div><span class="label">Third Supporting Point</span><span class="desc">A third distinct line of support — rounds out your argument.</span></div></li>
+          </ol>
+          <div class="pull-quote">Strong thesis statements have a topic and a claim — something arguable — supported by three distinct reasons.</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- WORKING -->
+    <section id="working" class="fade-up hidden">
+      <div class="progress">
+        <div class="progress-row" id="progressRow"></div>
+      </div>
+
+      <div class="grid grid-5">
+        <div>
+          <div class="stage-heading">
+            <span class="tag">Now working on</span>
+            <h2 id="stageTitle" class="display"></h2>
+            <p id="stageDesc" class="desc"></p>
+          </div>
+
+          <div class="card msg-card" id="msgCard">
+            <div id="msgContent"></div>
+            <div id="hintBlock" class="msg-hint hidden">
+              <span class="tag">Hint</span>
+              <p id="hintText"></p>
+            </div>
+          </div>
+
+          <div class="card thin input-card">
+            <textarea id="stageInput" rows="3" placeholder="Type your response here…"></textarea>
+            <div class="actions">
+              <button id="hintBtn" class="linkbtn">Need a hint?</button>
+              <button id="submitBtn" class="small-primary" disabled>Submit</button>
+            </div>
+          </div>
+          <p id="workingErr" class="err hidden"></p>
+        </div>
+
+        <aside>
+          <div class="card sticky">
+            <h3 class="sidebar-title">Your thesis, taking shape</h3>
+            <ul class="comp-list" id="compList"></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ASSEMBLING -->
+    <section id="assembling" class="fade-up hidden">
+      <div class="center-load">
+        <p class="lead display">Weaving it all together…</p>
+        <p class="sub">Drafting complete thesis statements from your components.</p>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section id="final" class="fade-up hidden">
+      <div class="final-heading">
+        <span class="tag accent">Complete</span>
+        <h2 class="display">Your thesis is <span class="italic">built</span>.</h2>
+      </div>
+      <div class="grid grid-5">
+        <div>
+          <div id="optionsSection" class="options-section hidden">
+            <span class="tag">Choose a phrasing</span>
+            <div class="options-list" id="optionsList"></div>
+          </div>
+
+          <div class="card accent-card final-thesis-card">
+            <span class="tag">Final thesis (editable)</span>
+            <textarea id="finalThesis" rows="4"></textarea>
+            <div class="actions">
+              <button id="copyBtn" class="small-primary">Copy</button>
+              <button id="newBtn" class="secondary">New Thesis</button>
+            </div>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <h3 class="sidebar-title">Revise a component</h3>
+            <p class="revise-intro">Not happy with a piece? Rework one without losing the others.</p>
+            <ul class="revise-list" id="reviseList"></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <span>A strong thesis earns its keep.</span>
+    <span class="brand">Thesis Workshop</span>
+  </div>
+</footer>
+
+<script>
+  // ============ CONFIG ============
+  // Using Claude via Anthropic's messages endpoint. The Netlify deployment
+  // will need an API key — easiest path is a small Netlify Function proxy
+  // (see README at bottom of this file). For now, you can drop a key here
+  // if you're testing locally, but DO NOT ship it to production like that.
+  const API_ENDPOINT = "/api/claude"; // points to a Netlify function proxy
+  const MODEL = "claude-sonnet-4-20250514";
+
+  // ============ STATE ============
+  const STAGE_ORDER = ['topic', 'claim', 'sub1', 'sub2', 'sub3'];
+  const STAGE_INFO = {
+    topic: { label: 'Topic', title: 'The Topic', description: 'A specific, focused subject — narrow enough to argue about.' },
+    claim: { label: 'Claim', title: 'The Claim', description: 'Your position on the topic. Something a reasonable person could disagree with.' },
+    sub1: { label: 'Reason 1', title: 'First Supporting Point', description: 'A distinct reason, example, or angle that proves your claim.' },
+    sub2: { label: 'Reason 2', title: 'Second Supporting Point', description: 'A different angle or line of evidence — must be clearly distinct from Reason 1.' },
+    sub3: { label: 'Reason 3', title: 'Third Supporting Point', description: 'A third, distinct line of support — rounds out your argument.' }
+  };
+
+  const state = {
+    stage: 'welcome',
+    essayContext: '',
+    initialInput: '',
+    components: { topic: '', claim: '', sub1: '', sub2: '', sub3: '' },
+    turnHistory: [],
+    currentMessage: null,
+    thesisOptions: [],
+    finalThesis: '',
+    isLoading: false
+  };
+
+  // ============ ELEMENTS ============
+  const el = {
+    sections: { welcome: document.getElementById('welcome'), working: document.getElementById('working'), assembling: document.getElementById('assembling'), final: document.getElementById('final') },
+    resetBtn: document.getElementById('resetBtn'),
+    essayContext: document.getElementById('essayContext'),
+    initialInput: document.getElementById('initialInput'),
+    startBtn: document.getElementById('startBtn'),
+    welcomeErr: document.getElementById('welcomeErr'),
+    progressRow: document.getElementById('progressRow'),
+    stageTitle: document.getElementById('stageTitle'),
+    stageDesc: document.getElementById('stageDesc'),
+    msgContent: document.getElementById('msgContent'),
+    hintBlock: document.getElementById('hintBlock'),
+    hintText: document.getElementById('hintText'),
+    stageInput: document.getElementById('stageInput'),
+    hintBtn: document.getElementById('hintBtn'),
+    submitBtn: document.getElementById('submitBtn'),
+    workingErr: document.getElementById('workingErr'),
+    compList: document.getElementById('compList'),
+    optionsSection: document.getElementById('optionsSection'),
+    optionsList: document.getElementById('optionsList'),
+    finalThesis: document.getElementById('finalThesis'),
+    copyBtn: document.getElementById('copyBtn'),
+    newBtn: document.getElementById('newBtn'),
+    reviseList: document.getElementById('reviseList')
+  };
+
+  // ============ API ============
+  async function callClaude(prompt) {
+    const response = await fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 1200,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    if (!response.ok) throw new Error('API request failed: ' + response.status);
+    const data = await response.json();
+    const text = (data.content || []).map(c => c.text || '').join('');
+    const cleaned = text.replace(/```json|```/g, '').trim();
+    const match = cleaned.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('No JSON in response');
+    return JSON.parse(match[0]);
+  }
+
+  function buildContextSummary(c) {
+    const parts = [];
+    if (c.topic) parts.push(`TOPIC: ${c.topic}`);
+    if (c.claim) parts.push(`CLAIM: ${c.claim}`);
+    if (c.sub1) parts.push(`REASON 1: ${c.sub1}`);
+    if (c.sub2) parts.push(`REASON 2: ${c.sub2}`);
+    if (c.sub3) parts.push(`REASON 3: ${c.sub3}`);
+    return parts.length ? parts.join('\n') : '(nothing built yet)';
+  }
+
+  // ============ STAGE CONTROL ============
+  function showSection(name) {
+    Object.keys(el.sections).forEach(k => el.sections[k].classList.toggle('hidden', k !== name));
+    el.resetBtn.classList.toggle('hidden', name === 'welcome');
+  }
+
+  function renderProgress() {
+    el.progressRow.innerHTML = '';
+    STAGE_ORDER.forEach((s, i) => {
+      const done = !!state.components[s] && s !== state.stage;
+      const active = s === state.stage;
+      const item = document.createElement('div');
+      item.className = 'progress-item';
+      item.innerHTML = `
+        <div class="progress-dot ${done ? 'done' : ''} ${active ? 'active' : ''}">${done ? '✓' : i + 1}</div>
+        <span class="progress-label ${active ? 'active' : ''}">${STAGE_INFO[s].label}</span>
+      `;
+      el.progressRow.appendChild(item);
+      if (i < STAGE_ORDER.length - 1) {
+        const line = document.createElement('div');
+        line.className = 'progress-line ' + (done ? 'done' : '');
+        el.progressRow.appendChild(line);
+      }
+    });
+  }
+
+  function renderComponentsSidebar() {
+    el.compList.innerHTML = '';
+    STAGE_ORDER.forEach(s => {
+      const li = document.createElement('li');
+      const val = state.components[s];
+      li.innerHTML = `
+        <span class="comp-label">${STAGE_INFO[s].label}</span>
+        <div class="comp-value ${val ? 'ink-bloom' : 'empty'}">${val ? escapeHtml(val) : '— not yet —'}</div>
+      `;
+      el.compList.appendChild(li);
+    });
+  }
+
+  function renderMessage() {
+    el.msgContent.innerHTML = '';
+    el.hintBlock.classList.add('hidden');
+    if (!state.currentMessage) {
+      if (state.isLoading) el.msgContent.innerHTML = '<p class="thinking">Thinking with you…</p>';
+      return;
+    }
+    const wrap = document.createElement('div');
+    wrap.className = 'ink-bloom';
+    if (state.currentMessage.affirmation) {
+      const a = document.createElement('p');
+      a.className = 'msg-affirm';
+      a.textContent = state.currentMessage.affirmation;
+      wrap.appendChild(a);
+    }
+    if (state.currentMessage.question) {
+      const q = document.createElement('p');
+      q.className = 'msg-question';
+      q.textContent = state.currentMessage.question;
+      wrap.appendChild(q);
+    }
+    el.msgContent.appendChild(wrap);
+  }
+
+  function renderStageHeader() {
+    const info = STAGE_INFO[state.stage];
+    if (!info) return;
+    el.stageTitle.textContent = info.title;
+    el.stageDesc.textContent = info.description;
+  }
+
+  function updateSubmitButton() {
+    el.submitBtn.disabled = !el.stageInput.value.trim() || state.isLoading;
+  }
+  function updateStartButton() {
+    el.startBtn.disabled = !el.initialInput.value.trim() || state.isLoading;
+  }
+
+  function setLoading(flag) {
+    state.isLoading = flag;
+    el.startBtn.textContent = flag && state.stage === 'welcome' ? 'Unpacking your thinking…' : 'Begin the workshop';
+    el.submitBtn.textContent = flag ? 'Thinking…' : 'Submit';
+    updateStartButton();
+    updateSubmitButton();
+    el.hintBtn.disabled = flag;
+  }
+
+  function showWelcomeError(msg) {
+    el.welcomeErr.textContent = msg; el.welcomeErr.classList.remove('hidden');
+  }
+  function clearWelcomeError() { el.welcomeErr.classList.add('hidden'); }
+  function showWorkingError(msg) {
+    el.workingErr.textContent = msg; el.workingErr.classList.remove('hidden');
+  }
+  function clearWorkingError() { el.workingErr.classList.add('hidden'); }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+  }
+
+  // ============ FLOW ============
+  async function startWorkshop() {
+    const input = el.initialInput.value.trim();
+    if (!input) return;
+    state.essayContext = el.essayContext.value.trim();
+    state.initialInput = input;
+    clearWelcomeError();
+    setLoading(true);
+
+    const prompt = `You are a warm, encouraging high school writing coach helping a student build a thesis statement for a literary analysis or argumentative essay. Your tone is strengths-first — always begin by naming what is working before guiding forward.
+
+${state.essayContext ? `ESSAY PROMPT/CONTEXT: "${state.essayContext}"\n` : ''}
+STUDENT'S INITIAL THINKING: "${input}"
+
+A strong thesis has these five components:
+- TOPIC: a specific, focused subject (e.g., "the symbol of the marrow in Dimaline's novel" — NOT just "The Marrow Thieves")
+- CLAIM: an arguable position (e.g., "represents Indigenous resilience" — NOT a factual observation)
+- THREE SUB-TOPICS: three DISTINCT supporting reasons, each viable as a body paragraph
+
+Analyze the student's input. Identify which components are clearly and strongly present, and which are weak/vague or missing. Be generous — if a topic or claim is reasonably clear, count it.
+
+Respond ONLY with valid JSON (no markdown, no prose outside JSON):
+{
+  "extracted": {
+    "topic": "the topic phrase if clearly and specifically present, else null",
+    "claim": "the claim phrase if clearly present and arguable, else null",
+    "sub1": "first distinct reason if present, else null",
+    "sub2": "second distinct reason if present, else null",
+    "sub3": "third distinct reason if present, else null"
+  },
+  "nextStage": "the first stage that needs work: one of topic, claim, sub1, sub2, sub3, assemble",
+  "openingAffirmation": "1-2 warm sentences naming what is genuinely strong or promising about their starting point",
+  "openingQuestion": "first focused guiding question for the next stage — specific, not generic"
+}
+
+If all five components are present and strong, set nextStage to "assemble".`;
+
+    try {
+      const result = await callClaude(prompt);
+      state.components = {
+        topic: result.extracted.topic || '',
+        claim: result.extracted.claim || '',
+        sub1: result.extracted.sub1 || '',
+        sub2: result.extracted.sub2 || '',
+        sub3: result.extracted.sub3 || ''
+      };
+
+      if (result.nextStage === 'assemble') {
+        await runAssembly();
+      } else {
+        state.stage = result.nextStage;
+        state.currentMessage = { affirmation: result.openingAffirmation, question: result.openingQuestion };
+        state.turnHistory = [];
+        showSection('working');
+        renderProgress();
+        renderStageHeader();
+        renderComponentsSidebar();
+        renderMessage();
+        el.stageInput.value = '';
+        el.stageInput.focus();
+      }
+    } catch (e) {
+      console.error(e);
+      showWelcomeError('Something went wrong connecting. Check that the API proxy is running, then try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleStageSubmit() {
+    const input = el.stageInput.value.trim();
+    if (!input || state.isLoading) return;
+    clearWorkingError();
+    el.hintBlock.classList.add('hidden');
+    el.stageInput.value = '';
+    updateSubmitButton();
+    setLoading(true);
+
+    const stageSpecs = {
+      topic: {
+        name: 'refining the TOPIC',
+        criteria: 'A strong topic is specific and focused — narrow enough that a single thesis could cover it. "Social media" is too broad; "social media\'s effect on teen sleep patterns" is focused. For literature, name the text AND the specific element (character, symbol, theme, scene). Reject vague or overly broad topics; accept once genuinely specific.',
+        field: 'topic'
+      },
+      claim: {
+        name: 'shaping the CLAIM',
+        criteria: 'A strong claim is an arguable position — something a reasonable person could disagree with. Reject pure facts ("the novel has three main characters"), reject restatements of the topic, and reject overly safe observations. Accept once the student takes a genuine, debatable stance.',
+        field: 'claim'
+      },
+      sub1: {
+        name: 'developing the FIRST supporting reason',
+        criteria: 'A strong reason is specific, distinct, and connected to the claim — something you could build a body paragraph around. Reject vague reasons ("it\'s important"), restatements of the claim, or empty phrasing.',
+        field: 'sub1'
+      },
+      sub2: {
+        name: 'developing the SECOND supporting reason',
+        criteria: 'The second reason must be CLEARLY DISTINCT from the first — not a rephrasing or overlap. It should open a different angle of the argument.',
+        field: 'sub2'
+      },
+      sub3: {
+        name: 'developing the THIRD supporting reason',
+        criteria: 'The third reason must be DISTINCT from both prior reasons and genuinely add to the argument. It rounds out the case.',
+        field: 'sub3'
+      }
+    };
+    const spec = stageSpecs[state.stage];
+    const newHistory = [...state.turnHistory, { role: 'student', content: input }];
+
+    const prompt = `You are a warm, strengths-first high school writing coach guiding a student through building ONE component of their thesis.
+
+${state.essayContext ? `ESSAY PROMPT/CONTEXT: "${state.essayContext}"\n` : ''}
+THESIS BUILT SO FAR:
+${buildContextSummary(state.components)}
+
+CURRENT STAGE: ${spec.name}
+CRITERIA FOR COMPLETION: ${spec.criteria}
+
+CONVERSATION THIS STAGE (most recent last):
+${newHistory.map(t => `${t.role === 'student' ? 'STUDENT' : 'COACH'}: ${t.content}`).join('\n')}
+
+Evaluate the student's latest response against the criteria. You have two possible actions:
+
+ACTION A — Not yet complete: Ask one more focused question to guide them further. Always open with affirmation of something genuine in their thinking.
+
+ACTION B — Complete: Their latest response meets the criteria. Celebrate the move and record the polished component.
+
+Respond ONLY with valid JSON:
+{
+  "isComplete": true or false,
+  "affirmation": "1-2 sentences of specific, genuine affirmation (never generic praise)",
+  "question": "if not complete, the next guiding question — else null",
+  "refinedComponent": "if complete, the polished phrasing of this component as a phrase, not a full sentence — else null"
+}
+
+Be patient but don't artificially delay — if the student nails it, move on. Never tell them their thinking is wrong; redirect with curiosity.`;
+
+    try {
+      const result = await callClaude(prompt);
+      state.turnHistory = [...newHistory, { role: 'coach', content: (result.affirmation || '') + ' ' + (result.question || '') }];
+
+      if (result.isComplete && result.refinedComponent) {
+        state.components[spec.field] = result.refinedComponent;
+        const idx = STAGE_ORDER.indexOf(state.stage);
+        const next = STAGE_ORDER[idx + 1];
+        renderComponentsSidebar();
+        renderProgress();
+
+        state.currentMessage = {
+          affirmation: result.affirmation,
+          question: next ? `Nice work locking that in. Let's move to ${STAGE_INFO[next].title.toLowerCase()}…` : 'All five components built — weaving them together now.'
+        };
+        renderMessage();
+
+        if (next) {
+          setTimeout(() => startNextStage(next), 1600);
+        } else {
+          setTimeout(() => runAssembly(), 1000);
+        }
+      } else {
+        state.currentMessage = { affirmation: result.affirmation, question: result.question };
+        renderMessage();
+      }
+    } catch (e) {
+      console.error(e);
+      showWorkingError('Something went wrong. Try rephrasing or submit again.');
+    } finally {
+      setLoading(false);
+      el.stageInput.focus();
+    }
+  }
+
+  async function startNextStage(nextStage) {
+    setLoading(true);
+    state.stage = nextStage;
+    state.turnHistory = [];
+    renderStageHeader();
+    renderProgress();
+
+    const stageDescriptions = {
+      claim: 'help them develop an ARGUABLE CLAIM about their topic — a position a reasonable person could disagree with',
+      sub1: 'help them articulate the FIRST distinct supporting reason for their claim',
+      sub2: 'help them articulate the SECOND distinct supporting reason, different from the first',
+      sub3: 'help them articulate the THIRD distinct supporting reason, different from the prior two'
+    };
+
+    const prompt = `You are a warm, strengths-first high school writing coach. The student just finished one component of their thesis. Now ${stageDescriptions[nextStage]}.
+
+${state.essayContext ? `ESSAY PROMPT/CONTEXT: "${state.essayContext}"\n` : ''}
+THESIS BUILT SO FAR:
+${buildContextSummary(state.components)}
+
+Ask ONE focused opening question to launch this new stage. The question should be specific to what they've built so far, not generic.
+
+Respond ONLY with valid JSON:
+{
+  "question": "the opening question (1-2 sentences, specific and warm)"
+}`;
+
+    try {
+      const result = await callClaude(prompt);
+      state.currentMessage = { affirmation: null, question: result.question };
+    } catch (e) {
+      state.currentMessage = { affirmation: null, question: `Let's work on ${STAGE_INFO[nextStage].title.toLowerCase()}. ${STAGE_INFO[nextStage].description}` };
+    } finally {
+      renderMessage();
+      setLoading(false);
+      el.stageInput.focus();
+    }
+  }
+
+  async function runAssembly() {
+    showSection('assembling');
+    state.stage = 'assemble';
+    setLoading(true);
+
+    const prompt = `You are a writing coach assembling a student's thesis statement from the components they've built.
+
+${state.essayContext ? `ESSAY CONTEXT: "${state.essayContext}"\n` : ''}
+COMPONENTS:
+- TOPIC: ${state.components.topic}
+- CLAIM: ${state.components.claim}
+- REASON 1: ${state.components.sub1}
+- REASON 2: ${state.components.sub2}
+- REASON 3: ${state.components.sub3}
+
+Generate THREE different well-crafted thesis statement options that integrate all components into polished, flowing sentences. Each should:
+- Read as a single graceful sentence (or at most two)
+- Preserve the student's substance while improving flow
+- Use slightly different syntactic approaches (e.g., one direct, one with a subordinate clause, one with a colon or list structure)
+- Sound like a strong high school or early college thesis — confident, specific, arguable
+
+Respond ONLY with valid JSON:
+{
+  "options": [
+    "first complete thesis statement",
+    "second complete thesis statement with different structure",
+    "third complete thesis statement with different structure"
+  ]
+}`;
+
+    try {
+      const result = await callClaude(prompt);
+      state.thesisOptions = result.options || [];
+      state.finalThesis = state.thesisOptions[0] || '';
+    } catch (e) {
+      const fallback = `${state.components.topic} ${state.components.claim} through ${state.components.sub1}, ${state.components.sub2}, and ${state.components.sub3}.`;
+      state.thesisOptions = [fallback];
+      state.finalThesis = fallback;
+    } finally {
+      renderFinal();
+      showSection('final');
+      setLoading(false);
+    }
+  }
+
+  function renderFinal() {
+    el.finalThesis.value = state.finalThesis;
+
+    if (state.thesisOptions.length > 1) {
+      el.optionsSection.classList.remove('hidden');
+      el.optionsList.innerHTML = '';
+      state.thesisOptions.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn' + (opt === state.finalThesis ? ' selected' : '');
+        btn.innerHTML = `<span class="idx">${i + 1}.</span><p>${escapeHtml(opt)}</p>`;
+        btn.addEventListener('click', () => {
+          state.finalThesis = opt;
+          el.finalThesis.value = opt;
+          document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        });
+        el.optionsList.appendChild(btn);
+      });
+    } else {
+      el.optionsSection.classList.add('hidden');
+    }
+
+    el.reviseList.innerHTML = '';
+    STAGE_ORDER.forEach(s => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.className = 'revise-item';
+      btn.innerHTML = `<span class="comp-label">${STAGE_INFO[s].label}</span><div class="comp-value">${escapeHtml(state.components[s] || '')}</div>`;
+      btn.addEventListener('click', () => reviseComponent(s));
+      li.appendChild(btn);
+      el.reviseList.appendChild(li);
+    });
+  }
+
+  async function reviseComponent(key) {
+    const prior = state.components[key];
+    state.components[key] = '';
+    state.stage = key;
+    state.turnHistory = [];
+    el.stageInput.value = '';
+    showSection('working');
+    renderProgress();
+    renderStageHeader();
+    renderComponentsSidebar();
+    setLoading(true);
+
+    const prompt = `You are a writing coach. The student wants to revise ONE component of their thesis — specifically ${STAGE_INFO[key].title}.
+
+${state.essayContext ? `ESSAY CONTEXT: "${state.essayContext}"\n` : ''}
+OTHER COMPONENTS THEY WANT TO KEEP:
+${buildContextSummary(state.components)}
+
+What they previously had (now discarded): "${prior}"
+
+Ask one open question inviting them to rethink this component. Warm, non-judgmental — they've chosen to revise because they want to strengthen it.
+
+Respond ONLY with valid JSON:
+{
+  "question": "the opening question"
+}`;
+
+    try {
+      const result = await callClaude(prompt);
+      state.currentMessage = { affirmation: null, question: result.question };
+    } catch (e) {
+      state.currentMessage = { affirmation: null, question: `Let's rework ${STAGE_INFO[key].title.toLowerCase()}. ${STAGE_INFO[key].description} What do you want to try this time?` };
+    } finally {
+      renderMessage();
+      setLoading(false);
+      el.stageInput.focus();
+    }
+  }
+
+  async function requestHint() {
+    if (state.isLoading) return;
+    setLoading(true);
+    const prompt = `You are a warm writing coach. A high school student is stuck on the current stage of building their thesis.
+
+${state.essayContext ? `ESSAY CONTEXT: "${state.essayContext}"\n` : ''}
+THESIS SO FAR:
+${buildContextSummary(state.components)}
+
+CURRENT STAGE: ${STAGE_INFO[state.stage].title} — ${STAGE_INFO[state.stage].description}
+
+Give them a gentle hint: either a worked example on a DIFFERENT topic (so you don't write it for them), or a probing question that unlocks their thinking. Keep it short — 2-3 sentences.
+
+Respond ONLY with valid JSON:
+{ "hint": "the hint text" }`;
+    try {
+      const result = await callClaude(prompt);
+      el.hintText.textContent = result.hint;
+      el.hintBlock.classList.remove('hidden');
+    } catch (e) {
+      el.hintText.textContent = 'Try thinking about it from a different angle — what would someone who disagrees with you say? Your claim should be something worth arguing.';
+      el.hintBlock.classList.remove('hidden');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function resetAll() {
+    state.stage = 'welcome';
+    state.essayContext = '';
+    state.initialInput = '';
+    state.components = { topic: '', claim: '', sub1: '', sub2: '', sub3: '' };
+    state.turnHistory = [];
+    state.currentMessage = null;
+    state.thesisOptions = [];
+    state.finalThesis = '';
+    el.essayContext.value = '';
+    el.initialInput.value = '';
+    el.stageInput.value = '';
+    clearWelcomeError(); clearWorkingError();
+    showSection('welcome');
+    updateStartButton();
+  }
+
+  // ============ EVENTS ============
+  el.initialInput.addEventListener('input', updateStartButton);
+  el.stageInput.addEventListener('input', updateSubmitButton);
+  el.stageInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleStageSubmit();
+  });
+  el.startBtn.addEventListener('click', startWorkshop);
+  el.submitBtn.addEventListener('click', handleStageSubmit);
+  el.hintBtn.addEventListener('click', requestHint);
+  el.resetBtn.addEventListener('click', resetAll);
+  el.newBtn.addEventListener('click', resetAll);
+  el.finalThesis.addEventListener('input', () => { state.finalThesis = el.finalThesis.value; });
+  el.copyBtn.addEventListener('click', () => {
+    navigator.clipboard?.writeText(el.finalThesis.value);
+    el.copyBtn.textContent = 'Copied';
+    setTimeout(() => el.copyBtn.textContent = 'Copy', 1500);
+  });
+
+  // Init
+  showSection('welcome');
+  updateStartButton();
+</script>
+
+<!--
+  ============================================================
+  DEPLOYMENT NOTES (Netlify)
+  ============================================================
+  The API_ENDPOINT above points to /api/claude. You need a tiny
+  Netlify Function to proxy Anthropic's API (keeps your API key
+  out of the browser). Create these two files in your project:
+
+  ─── netlify.toml ─────────────────────────────────────────
+  [build]
+    functions = "netlify/functions"
+
+  [[redirects]]
+    from = "/api/claude"
+    to = "/.netlify/functions/claude"
+    status = 200
+
+  ─── netlify/functions/claude.js ──────────────────────────
+  exports.handler = async (event) => {
+    if (event.httpMethod !== 'POST') {
+      return { statusCode: 405, body: 'Method Not Allowed' };
+    }
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: event.body
+    });
+    const data = await response.text();
+    return {
+      statusCode: response.status,
+      headers: { 'Content-Type': 'application/json' },
+      body: data
+    };
+  };
+  ──────────────────────────────────────────────────────────
+
+  Then in Netlify site settings → Environment variables, add
+  ANTHROPIC_API_KEY with your key. Redeploy and you're live.
+-->
+
+</body>
+</html>
